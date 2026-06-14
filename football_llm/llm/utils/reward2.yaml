@@ -1,0 +1,17 @@
+reward_config:
+  win_reward: 5
+  preprocess_score: 0
+  ball_position_reward: 0.5
+  yellow_reward: 5
+  min_dist_reward: 0
+  goal_reward: 5
+  pass_reward: 0.02
+  shot_reward: 0.02
+  lost_ball_reward: 0.02
+  player_move_reward:  0.01
+  dist_goal_to_line: 0
+  role_based_r: 0
+  pure_goal: 5
+  pure_lose_goal: 0
+  control_ball_reward: 0.1
+  fix: False

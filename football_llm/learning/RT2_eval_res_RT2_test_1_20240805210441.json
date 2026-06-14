@@ -1,0 +1,22 @@
+{
+    "rew": -3.0,
+    "win": 0.0,
+    "draw": 0.0,
+    "lose": 1.0,
+    "replaced_rate": 0.27470575172107486,
+    "rew_11_vs_11_level_0": -6.0,
+    "win_11_vs_11_level_0": 0.0,
+    "draw_11_vs_11_level_0": 0.0,
+    "lose_11_vs_11_level_0": 1.0,
+    "replaced_rate_11_vs_11_level_0": 0.23984010659560293,
+    "rew_11_vs_11_level_1": -1.0,
+    "win_11_vs_11_level_1": 0.0,
+    "draw_11_vs_11_level_1": 0.0,
+    "lose_11_vs_11_level_1": 1.0,
+    "replaced_rate_11_vs_11_level_1": 0.24783477681545638,
+    "rew_11_vs_11_level_2": -2.0,
+    "win_11_vs_11_level_2": 0.0,
+    "draw_11_vs_11_level_2": 0.0,
+    "lose_11_vs_11_level_2": 1.0,
+    "replaced_rate_11_vs_11_level_2": 0.33644237175216524
+}

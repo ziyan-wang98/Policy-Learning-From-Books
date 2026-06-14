@@ -1,0 +1,8 @@
+
+root: "plfb-uri"
+
+book: ???
+res_root: ???
+data_path: ${.root}/data
+book_path: ${.data_path}/${.book}
+res_path: ${.data_path}/${.res_root}

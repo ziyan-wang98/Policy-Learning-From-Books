@@ -1,0 +1,7 @@
+
+defaults:
+  - base
+agg_res_prefix: agg
+res_root: football_data
+
+book: football_soccer_90.jsonl

@@ -1,0 +1,7 @@
+defaults:
+  - base
+
+agg_res_prefix: v2-agg
+res_root: tic_tac_toe_data
+
+book: tic_tac_toe_noise-knowledge-v2.jsonl

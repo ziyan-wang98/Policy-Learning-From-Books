@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments
+.env
+.venv/
+env/
+venv/
+*.conda
+
+# Secrets
+*.pem
+*.key
+*.token
+.env.*
+!.env.example
+
+# Logs and generated outputs
+logs/
+wandb/
+runs/
+outputs/
+IRL_LOG/
+ORL_LOG/
+ORL_LOG_DEBUG/
+ORL_LOG_BC*/
+*.log
+*.out
+*.err
+*.dump
+*.avi
+
+# Data and artifacts
+data/offline_dataset*/
+football_llm/data/offline_dataset*/
+football_llm/data/rule_based_2_level_*/
+football_llm/data/tic_tac_toe_data/
+redpajama/
+thepile/
+*.d3
+*.pt
+*.pth
+*.npz
+*.npy
+*.zip
+*.tar
+*.tar.gz
+
+# Local IDE and native build products
+.vscode/
+.DS_Store
+football_llm/setup/football/third_party/gfootball_engine/CMakeFiles/
+football_llm/setup/football/third_party/gfootball_engine/CMakeCache.txt
+football_llm/setup/football/third_party/gfootball_engine/cmake_install.cmake

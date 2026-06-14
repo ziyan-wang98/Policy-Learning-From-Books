@@ -1,0 +1,49 @@
+cff-version: 1.2.0
+message: "If you use this code or dataset, please cite the NeurIPS 2024 paper."
+title: "Policy Learning from Tutorial Books via Understanding, Rehearsing and Introspecting"
+license: Apache-2.0
+url: "https://plfb-football.github.io/"
+repository-code: "https://github.com/ziyan-wang98/Policy-Learning-From-Books"
+authors:
+  - family-names: Chen
+    given-names: Xiong-Hui
+  - family-names: Wang
+    given-names: Ziyan
+  - family-names: Du
+    given-names: Yali
+  - family-names: Jiang
+    given-names: Shengyi
+  - family-names: Fang
+    given-names: Meng
+  - family-names: Yu
+    given-names: Yang
+  - family-names: Wang
+    given-names: Jun
+preferred-citation:
+  type: conference-paper
+  title: "Policy Learning from Tutorial Books via Understanding, Rehearsing and Introspecting"
+  authors:
+    - family-names: Chen
+      given-names: Xiong-Hui
+    - family-names: Wang
+      given-names: Ziyan
+    - family-names: Du
+      given-names: Yali
+    - family-names: Jiang
+      given-names: Shengyi
+    - family-names: Fang
+      given-names: Meng
+    - family-names: Yu
+      given-names: Yang
+    - family-names: Wang
+      given-names: Jun
+  conference:
+    name: "Advances in Neural Information Processing Systems"
+  year: 2024
+  volume: 37
+  start: 18940
+  end: 18987
+  publisher:
+    name: "Curran Associates, Inc."
+  doi: "10.52202/079017-0600"
+  url: "https://proceedings.neurips.cc/paper_files/paper/2024/file/21cf8411ed825614e00006a1d9aab7e4-Paper-Conference.pdf"

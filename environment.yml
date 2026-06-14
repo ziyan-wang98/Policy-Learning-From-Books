@@ -1,0 +1,10 @@
+name: plfb
+channels:
+  - defaults
+dependencies:
+  - python=3.8
+  - pip<24
+  - setuptools=65.*
+  - wheel=0.38.*
+  - pip:
+      - -r requirements.txt

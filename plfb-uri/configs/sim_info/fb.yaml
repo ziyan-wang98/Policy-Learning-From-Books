@@ -1,0 +1,177 @@
+
+defaults:
+  - base
+
+ENV_NAME: "football"
+
+TASK_DESC: "an expert football manager and also an expert in python coding and Reinforcement Learning"
+
+ACTION_SPACE_DESC: |
+    action set = (
+    0, # action_idle, a no-op action, sticky actions are not affected (player maintains his directional movement etc.).
+    1, # action_left, sticky action and will change the player's direction, player will continue to move left until another action is taken. Such as, from zone(11,4) to zone(10,4)
+    2, # action_top_left, sticky action and will change the player's direction, player will continue to move top left until another action is taken. Such as, from zone(11,4) to zone(10,5)
+    3, # action_top, sticky action and will change the player's direction, player will continue to move top until another action is taken. Such as, from zone(11,4) to zone(11,5)
+    4, # action_top_right, sticky action and will change the player's direction, player will continue to move top right until another action is taken. Such as, from zone(11,4) to zone(12,5)
+    5, # action_right, sticky action and will change the player's direction, player will continue to move right until another action is taken. Such as, from zone(11,4) to zone(12,4)
+    6, # action_bottom_right, sticky action and will change the player's direction, player will continue to move bottom right until another action is taken. Such as, from zone(11,4) to zone(12,3)
+    7, # action_bottom, sticky action and will change the player's direction, player will continue to move bottom until another action is taken.Such as, from zone(11,4) to zone(11,3)
+    8, # action_bottom_left, sticky action and will change the player's direction, player will continue to move bottom left until another action is taken. Such as, from zone(11,4) to zone(10,3)
+    9, # action_long_pass, the player will long pass to their teammate in his current direction. Before you pass, you should relase the sprint if the agent is doing sprint. A long pass covers a large distance on the field.
+    10, # action_high_pass, the player will high pass to their teammate in his current direction. Before you pass, you should relase the sprint if the agent is doing sprint. A high pass sends the ball into the air, often over obstacles, to reach a teammate.
+    11, # action_short_pass, the player will short pass to their teammate in his current direction. Before you pass, you should tune make sure the diresction is fine, using action 0-8 to chenge the direction. A short pass is a quick and close-range exchange between teammates, commonly used to maintain possession and build an attack.
+    12, # action_shot, players will try to shoot. When near to the oppenent penalty area , such as zone(x, y), x>18, 4<y<8, try to shoot.
+    13, # action_sprint, when the player will chose this action, the agent will sprint with sticky action's direction, it will make agent run faster.
+    14, # action_release_direction, player will stop moving in the current direction. Choose it when you want this agent to change the direction, after this action, you should choose another action from 0-8 to change it.
+    15, # action_release_sprint, player will stop sprinting, only when the agent's during the sprint.
+    16, # action_sliding, the player will try to slide the tackle. If your position is on the opponent's path with the ball, you can intercept it. However, if the sliding tackle fails, you will be separated by a large distance, allowing the opponent to ignore the defense.
+    17, # action_dribble, players will try to dribble. When they have the ball, dribbling will greatly improve the success rate of dribbling, especially in multi-person double-teams and difficult-to-handle situations.
+    18, # action_release_dribble, player will stop dribbling.
+    )
+
+sticky_list_map_dir:
+  - left
+  - top-left
+  - top
+  - top-right
+  - right
+  - bottom-right
+  - bottom
+  - bottom-left
+  - Sprint
+  - Dribble
+
+sticky_list:
+  - Left
+  - TopLeft
+  - Top
+  - TopRight
+  - Right
+  - BottomRight
+  - Bottom
+  - BottomLeft
+  - Sprint
+  - Dribble
+
+PLAYER_ROLES:
+  - Goalkeeper
+  - Forward
+  - Forward
+  - Defender
+  - Defender
+  - Defender
+  - Defender
+  - Midfielder
+  - Midfielder
+  - Midfielders
+  - Forward
+
+DIRECTIONS_NIPS:
+  - north
+  - northeast
+  - east
+  - southeast
+  - south
+  - southwest
+  - west
+  - northwest
+
+DIRECTIONS_NEW:
+  - top
+  - top-right
+  - right
+  - bottom-right
+  - bottom
+  - bottom-left
+  - left
+  - top-left
+
+DIRECTIONS: DIRECTIONS_NIPS
+
+OBSERVATION_SPACE_DESC: |
+    First, it provides information such as the time and score of the match. 
+    Second, which side has control of the ball, and the active player in the Left team you need to propose corresponding policies to him. 
+
+    Next is the position, direction and role information of each player: 
+    - In this text description, the football grass field, which is 120m * 90m in the real world, is divided into 240 zones in the simulator, where "x" ranges from 1 to 20 (left to right from the left team's perspective) and "y" ranges from 1 to 12 (bottom to top). 
+    - Based on this transfomation, the concepts in real-world football field can be mapped to the simulator, For instance,
+        * the center circle is at (10, 6), and the lower left corner from the left team's view is at (1, 1), and the upper right corner position of the Right team is (20, 12). 
+        * the distance from (10, 5) to (11, 5) in the real-world is 12m, and the distance from (10, 5) to (10, 6) is 7.5m.
+        * the left team's penalty area is zone (1, 4)-(1, 8)-(2, 8)-(2, 4), and the right team's penalty area is zone (20, 4)-(20, 8)-(18, 8)-(18, 4).
+        - the center circle position of the field is zone (10, 6), where the game start.
+    - The position of the player is defined by the player's moving in the corresponding direction, including DIRECTIONS
+    - role information: for each team, player roles are fixed, including PLAYER_ROLES
+
+    NOTE: Venues never interchange or change. Following the position information is direction, meaning the direction the player is currently facing and the direction of future actions.
+
+REWRADE_DESC: |
+    The behavior that is encouraged is when the forwards are restricted, the midfielder can support and take away the defenders. This is a very encouraging behavior because it allows the team to keep possession of the ball and control the game. 
+
+    You should only identify 5 types of rewards: 
+    A. 2 for Optimal behavior; 
+    B. 1 for Encouraging behavior; 
+    C. 0 for Borderline behavior; 
+    D. 1 for Punishing behavior; 
+    E: -2 for Worest behavior.
+
+element_type_prompt_dict:
+  Policy: 'The football manager policy is to give the tactics and strategies for all players in the team, such as how players should be used in the frontcourt during a match, or when forwards should take shots. For example: "When watching defenders you have to assess how they respond to their opponents as well as the ball." '
+  Dynamics: 'Dynamics is to give the dynamics function or related rules of the football game under the football manager policy''s action, such as after shotting, the ball will be in the goal or not. For example: "When the direction of shotting is vertical to the goal, the ball will be easy to the goal." '
+  Reward: 'Reward is to give the reward or punishment of the football manager policy. For example: "When the forwards are restricted, the midfielder can support and take away the defenders, which is a very encouraging behavior." '
+
+element_type_example_dict:
+  Policy: "4-4-2 is a good formation for a team with a strong midfield, because it allows the team to control the ball and keep possession. To play this formation, the team should have two central midfielders, two wingers, and two strikers. The central midfielders should be able to pass the ball well and control the game. The wingers should be able to run up and down the wing, and cross the ball into the box. The strikers should be able to score goals."
+  Reward: "The behavior that is encouraged is when the forwards are restricted, the midfielder can support and take away the defenders. This is a very encouraging behavior because it allows the team to keep possession of the ball and control the game. You should only identify 5 types of rewards: 2: Optimal behavior; 1: Encouraging behavior; 0: Borderline behavior; -1: Punishing behavior; -2: Worest behavior."
+  Dynamics: "When the direction of shotting is vertical to the goal, the ball will be easy to the goal."
+
+element_type_format_dict:
+  Policy: "Policy function: observation -> action"
+  Dynamics: "Dynamics function: observation, action -> next_observation"
+  Reward: "Reward function: observation, action, next_observation -> reward"
+
+element_type_infer_hint:
+  Policy: |
+            For example,if the active player is Player 2 and you want him to close to the ball and control it, in the texted observation, 
+        
+            - Forward Player 2 is at Zone(9,9).
+            - The ball is at Zone(11,8).
+        
+            your thought should like "Given these coordinates, the ball is diagonally one zone to the right (east) and one zone down (south) from the player's current position. The most direct route to the ball would indeed be diagonally towards the bottom right. Therefore, the most appropriate action for Forward Player 2 in this situation would be: action_bottom_right"        
+            Your output action should be 6.
+  Dynamics: |
+            Important keys in the observation:
+            - `score`: The current socre of the match, should be a list of two integers, such as [0,0], the first integer is the score of the left team, the second integer is the score of the right team.
+            - `step`: The current step of the match, should be an integer that should add 1 to the current text observation step.
+            - `ball_ownership` : The output should be an integer, 1 means the left team has the ball, 2 means the right team has the ball, 0 means no team has the ball, or the ball is during the passing. The team that currently has the ball, No matter which team passes the ball, shoots or is intercepted, the ball rights will be overwritten. As long as any player passes the ball, the ball's ownership will be 0 and no one will control the ball. A team is judged to be in possession of the ball only when the ball is at a player's feet. 
+            - `left_active_player_zone`: The zone of the left team active player at the next time step; you should first check the result generated in the key "active_left_player", then check the zone of that player in the current time step observation, and then based on the left team active player provided above action to output. The output should be a list of two integers, the first being the x-coordinate of player 0, ranging from 1 to 20. The second integer is the y-coordinate of player 0, ranging from 1 to 12. For example, [7,6].
+            - `ball_zone`:  This description elaborates on the mechanism for determining the position of the ball in a football game simulator. In this simulator, the ball's position is represented by a list containing two integers. The first integer indicates the ball's x-coordinate, with a value range from 1 to 20, while the second integer represents the y-coordinate, ranging from 1 to 12. For instance, the zoon [17,2] signify a specific location of the ball on the field. When an active player from the left team controls the ball, the position of the ball changes according to the player's movements. During each timestep, if the player chooses one of the actions between 0 to 8, or if the sticky action list includes an action that the player continuously performs, depending on the direction of the player's movement. In the case of passing, the ball moves at a faster speed. The player first determines the intended teammate for the pass and then simulates the flight of the ball. In this scenario, the ball can move between 0 to 4 grid spaces per timestep. For example, if a player chooses to make a long pass (action 9), with the current position of the ball at [4,5] and the target teammate at [11,7], then the position of the ball in the next moment is likely to be around [7,6].
+
+            NOTE: if the active player still owner the ball, the player zone and the ball zone should be the same.
+            
+            Based on the current texted observation and the action set, generate the next step text observation. 
+            
+            For instance, if the current observation shows the Left team player 3 in zone (12,4) and the chosen action is "Top," the next observation should show the player in zone (12,5).
+  Reward: |
+            Based on the current texted observation and the action set, generate the dense reward of the current step's action and state, based on the reward code above.
+            The rewards should be one of -2, -1, 0, 1, or 2.
+
+element_type_infer_format:
+  Policy: |
+            {
+                "thought": "give your thought to generate the action the current step's state, based on the policy code above.",
+                "action": 0,
+            }
+  Dynamics: |
+            {
+                "thought": "based on the current texted observation and the action set, the ball and player 3 are in the zone [9,4], and the active player is controlling the ball, and choose the action go top, thus consider the right have very low chance to interape the ball, the ball will be in the zone [9,5] in the next time step."
+                "score": [0,0],
+                "step": 2,
+                "ball_ownership": 1,
+                "ball_zone": [9,5],
+                "left_active_player_zone": [9,5],
+            }
+  Reward: |
+            {
+                "thought": "give your thought to generate the dense reward of the current step's action and state, based on the reward code above."
+                "dense_reward:": 1,
+            }

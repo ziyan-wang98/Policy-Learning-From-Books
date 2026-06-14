@@ -1,0 +1,1 @@
+rule_based_2, win: 0.5\lose: 0.0\draw: 0.5 in 10 tests, map: 11_vs_11_level_4

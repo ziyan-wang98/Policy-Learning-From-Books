@@ -1,0 +1,15 @@
+name: plfb-hf-upload
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - huggingface_hub>=1.0.0
+      - hf_transfer
+      - h5py
+      - numpy
+      - pandas
+      - pyyaml
+      - tqdm

@@ -1,0 +1,46 @@
+{
+  "artifacts": {
+    "final_ciql_checkpoint": {
+      "path": "artifacts/football/final_uri_best/model_rew_0.5&step_48000.d3",
+      "role": "paper-aligned released policy"
+    },
+    "final_ciql_params": {
+      "path": "artifacts/football/final_uri_best/params.json"
+    },
+    "paper_0204_merged_cache": {
+      "path": "football/imaginary_dataset_0204/merged_data/v3datatrace_real_num=0&extra_real_traj_num=0&obs_stack_num=4&rollout_num=0.npz"
+    },
+    "strict_first_stage": {
+      "path": "artifacts/football/strict_repro_first_stage_ba0e02e/model_290000.d3",
+      "role": "public replay first-stage checkpoint"
+    }
+  },
+  "ciql_hyperparameters": {
+    "algorithm": "CIQL",
+    "alpha": 60.0,
+    "coef_r": 0.5,
+    "coef_t": 0.5,
+    "ent_target_coef": 0.8,
+    "extra_real_traj_num": 0,
+    "fake_rollout_num": -1,
+    "n_steps": 200000,
+    "n_steps_per_epoch": 3000,
+    "obs_stack_num": 4,
+    "rollout_num": 0,
+    "seed": 0,
+    "strategy": "all_replaced",
+    "target_value": 0.02,
+    "trace_real_num": 0
+  },
+  "evaluation": {
+    "artifact_root": "PLFB_ARTIFACT_ROOT",
+    "command": "bash scripts/eval_ciql.sh",
+    "output_dir": "PLFB_WORK_ROOT/eval_result"
+  },
+  "limitations": [
+    "Raw book text is not distributed.",
+    "Historical BC policy checkpoints are not distributed.",
+    "Private training-only first-stage checkpoints are not part of the public release contract."
+  ],
+  "release": "Policy Learning from Books public football release"
+}
